@@ -1,0 +1,6 @@
+punishments:
+  "3":
+    type: Тайм-аут
+    duration: 300000
+  "5":
+    type: Бан

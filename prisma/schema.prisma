@@ -1,0 +1,78 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Warnings {
+  id          String    @id @unique @default(cuid())
+  userId      String
+  moderatorId String
+  guildId     String
+  channelId   String?
+  reason      String?
+  endsAt      DateTime?
+  createdAt   DateTime  @default(now())
+}
+
+model ApplicationConfig {
+  guildId           String        @id
+  forumId           String?
+  moderationForumId String?
+  roleId            String?
+  enabled           Boolean?      @default(false)
+  applications      Application[]
+}
+
+model Application {
+  id        Int               @id @default(autoincrement())
+  name      String?
+  userId    String
+  guildId   String
+  channelId String
+  questions Question[]
+  finished  Boolean           @default(false)
+  config    ApplicationConfig @relation(fields: [guildId], references: [guildId])
+}
+
+model Question {
+  id            Int         @id @default(autoincrement())
+  applicationId Int
+  guildId       String
+  question      String
+  answers       Answer[]
+  application   Application @relation(fields: [applicationId], references: [id])
+
+  @@index([applicationId])
+}
+
+model Answer {
+  id         Int      @id @default(autoincrement())
+  userId     String
+  answer     String
+  questionId Int
+  question   Question @relation(fields: [questionId], references: [id])
+
+  @@index([questionId])
+}
+
+model VerifyConfig {
+  guildId String   @id
+  enabled Boolean  @default(false)
+  roles   String[]
+}
+
+model Economy {
+  id        String    @id @unique
+  money     Int       @default(0)
+  claimedAt DateTime?
+}

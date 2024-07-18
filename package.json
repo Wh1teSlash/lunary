@@ -1,0 +1,37 @@
+{
+  "name": "reciple-app",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "rimraf ./modules && tsc",
+    "start": "reciple -c reciple.mjs",
+    "build:start": "pnpm run build && reciple -c reciple.mjs",
+    "dev": "nodemon --ext ts,mts,json --ignore ./modules --exec \"pnpm run build && reciple -c reciple.mjs\" --signal SIGHUP"
+  },
+  "dependencies": {
+    "@prisma/client": "5.15.0",
+    "@reciple/core": "^9.4.1",
+    "@reciple/utils": "^9.3.1",
+    "@thenorthsolution/djs-pagination": "^1.0.0",
+    "@types/ms": "^0.7.34",
+    "discord.js": "^14.15.3",
+    "dotenv": "^16.4.5",
+    "fallout-utility": "^2.9.1",
+    "lodash": "^4.17.21",
+    "ms": "^2.1.3",
+    "prisma": "^5.16.2",
+    "reciple": "^9.4.1",
+    "reciple-anticrash": "3.2.0",
+    "reciple-dev-commands": "3.2.0",
+    "reciple-interaction-events": "3.2.0",
+    "reciple-registry-cache": "3.2.0",
+    "yaml": "^2.4.5"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.17.7",
+    "@types/node": "^20.14.10",
+    "nodemon": "^3.1.4",
+    "rimraf": "^5.0.9",
+    "typescript": "^5.5.3"
+  }
+}
